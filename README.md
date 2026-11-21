@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Android-API%2026--34+-3DDC84.svg?style=for-the-badge&logo=android&logoColor=white" alt="Android API 26-34+">
   <img src="https://img.shields.io/badge/Gradle-9.3.1-02303A.svg?style=for-the-badge&logo=gradle&logoColor=white" alt="Gradle">
-  <img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/License-Personal%20Use%20Only-red.svg?style=for-the-badge" alt="Personal Use Only">
 </p>
 
 <p align="center">
@@ -165,6 +165,9 @@ web2apk/
 
 ---
 
-## 📄 License
+## 📄 License & Terms of Use
 
-This project is licensed under the [MIT License](LICENSE) — free for personal, commercial, and educational use.
+This project is licensed under the **Personal & Non-Commercial License** ([LICENSE](LICENSE)) &bull; Copyright &copy; 2026 **Mohsin Khawaja**.
+
+- ✅ **Permitted**: Free for personal, educational, research, and non-commercial usage.
+- ❌ **Prohibited**: Commercial use, selling, redistribution for profit, licensing, or inclusion in paid products/services is strictly prohibited.
