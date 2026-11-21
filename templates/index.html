@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web2Apk v1.0 — By Mohsin Khawaja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f1f5f9;
+      --bg-terminal: #0f172a;
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --border-focus: #4f46e5;
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-sub: #64748b;
+      --text-light: #94a3b8;
+      
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-subtle: #eef2ff;
+      --primary-glow: rgba(79, 70, 229, 0.16);
+      
+      --accent: #0284c7;
+      --accent-subtle: #e0f2fe;
+      
+      --success: #059669;
+      --success-subtle: #ecfdf5;
+      --success-glow: rgba(5, 150, 105, 0.18);
+      
+      --warning: #d97706;
+      --warning-subtle: #fffbeb;
+      
+      --error: #dc2626;
+      --error-subtle: #fef2f2;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Screen Viewport Fit - Zero Scroll on Standard Desktop */
+    html, body {
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.04) 0px, transparent 45%),
+        radial-gradient(at 90% 90%, rgba(14, 165, 233, 0.04) 0px, transparent 45%);
+    }
+
+    .app-wrapper {
+      max-width: 1720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px 24px 6px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 10px rgba(79, 70, 229, 0.25);
+      color: #fff;
+    }
+
+    .brand-logo svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2.2;
+    }
+
+    .brand-text h1 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.15;
+    }
+
+    .badge-version {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+    }
+
+    .punchline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 3px 10px;
+      border-radius: 16px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .brand-author {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .brand-author .author-name {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .btn-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-header:hover {
+      background: var(--bg-card-subtle);
+      border-color: var(--border-strong);
+    }
+
+    .btn-header svg {
+      width: 15px;
+      height: 15px;
+      color: var(--text-muted);
+    }
+
+    /* Diagnostics Slim Overview Bar */
+    .env-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+
+    .env-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .env-card-info {
+      overflow: hidden;
+      padding-right: 8px;
+    }
+
+    .env-card-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-sub);
+      display: block;
+    }
+
+    .env-card-value {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status-pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .status-pill.ready {
+      background: var(--success-subtle);
+      color: var(--success);
+    }
+
+    .status-pill.error {
+      background: var(--error-subtle);
+      color: var(--error);
+    }
+
+    /* Main Workspace - 2 Columns Full Width */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 18px;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-main);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .card-title-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-title-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Form Content */
+    .form-scroll-content {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .form-label .required {
+      color: var(--error);
+    }
+
+    /* Source Selector Mode Tabs */
+    .source-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #f1f5f9;
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border: none;
+      background: transparent;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      color: var(--text-sub);
+      pointer-events: none;
+      width: 17px;
+      height: 17px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px 9px 38px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      font-family: inherit;
+      font-weight: 500;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .form-hint {
+      font-size: 0.72rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .package-preview-tag {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      background: var(--primary-subtle);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    /* Compact Dropzone */
+    .dropzone-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .dropzone {
+      flex: 1;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+    }
+
+    .dropzone input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .dropzone-text {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .dropzone-sub {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+    }
+
+    .preview-box {
+      width: 52px;
+      height: 52px;
+      background: #f1f5f9;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-box svg {
+      width: 22px;
+      height: 22px;
+      color: var(--text-light);
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 3px 12px var(--primary-glow);
+      transition: var(--transition);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Right Column: Console & Stepper */
+    .pipeline-stepper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .pipeline-stepper::before {
+      content: '';
+      position: absolute;
+      top: 13px;
+      left: 14px;
+      right: 14px;
+      height: 2px;
+      background: var(--border-subtle);
+      z-index: 1;
+    }
+
+    .step-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .step-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-sub);
+    }
+
+    .step-node.active .step-circle {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .step-node.completed .step-circle {
+      border-color: var(--success);
+      background: var(--success);
+      color: #fff;
+    }
+
+    .step-name {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .step-node.active .step-name {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Progress bar */
+    .progress-wrapper {
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 7px;
+      background: #f1f5f9;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #4f46e5, #06b6d4);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 0.78rem;
+    }
+
+    .progress-status {
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .progress-percent {
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+    }
+
+    /* Console Terminal Box */
+    .console-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      flex-shrink: 0;
+    }
+
+    .console-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .console-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .console-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .console-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-console {
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #e2e8f0;
+      border-radius: 3px;
+      padding: 2px 7px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-console:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .terminal-box {
+      flex: 1;
+      min-height: 160px;
+      background: var(--bg-terminal);
+      border: 1px solid #1e293b;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .log-info { color: #38bdf8; }
+    .log-success { color: #34d399; font-weight: 600; }
+    .log-warn { color: #fde047; }
+    .log-error { color: #f87171; font-weight: 600; }
+    .log-dim { color: #64748b; }
+
+    /* Success Card Banner */
+    .success-card {
+      display: none;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-top: 10px;
+      flex-shrink: 0;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .success-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .success-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #fff;
+    }
+
+    .success-details h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #065f46;
+    }
+
+    .success-details p {
+      font-size: 0.8rem;
+      color: #047857;
+    }
+
+    .success-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      margin-bottom: 10px;
+    }
+
+    .meta-item-label {
+      font-size: 0.65rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .meta-item-val {
+      font-size: 0.84rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-main);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-download {
+      flex: 1;
+      background: #059669;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 9px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      box-shadow: 0 3px 10px var(--success-glow);
+    }
+
+    .btn-download:hover {
+      background: #047857;
+    }
+
+    .btn-open-folder {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Footer - Compact Single Line */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+      padding: 8px 24px;
+      flex-shrink: 0;
+    }
+
+    .footer-content {
+      max-width: 1720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .footer-tagline strong {
+      color: var(--text-main);
+    }
+
+    .btn-instagram {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(220, 39, 67, 0.2);
+      transition: var(--transition);
+    }
+
+    .btn-instagram:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(220, 39, 67, 0.35);
+    }
+
+    .btn-instagram svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      html, body { height: auto; overflow-y: auto; }
+      .workspace-grid { grid-template-columns: 1fr; }
+      .env-grid { grid-template-columns: repeat(2, 1fr); }
+      .terminal-box { min-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Header -->
+    <header>
+      <div class="brand-container">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>
+            Web2Apk
+            <span class="badge-version">v1.0</span>
+            <span class="punchline-pill">Get rid of paid web to apk tools</span>
+          </h1>
+          <div class="brand-author">
+            By <span class="author-name">Mohsin Khawaja</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-header" onclick="openOutputFolder()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+        </svg>
+        Open APKs Folder
+      </button>
+    </header>
+
+    <!-- Diagnostics Overview Bar (Slim) -->
+    <section class="env-grid" id="envGrid">
+      <div class="env-card">
+        <div class="env-card-info">
+          <span class="env-card-title">Java JDK</span>
+          <div class="env-card-value" id="valJava">Scanning...</div>
+        </div>
+        <span class="status-pill" id="pillJava">Checking</span>
+      </div>
+
+      <div class="env-card">
+        <div class="env-card-info">
+          <span class="env-card-title">Android SDK</span>
+          <div class="env-card-value" id="valSdk">Scanning...</div>
+        </div>
+        <span class="status-pill" id="pillSdk">Checking</span>
+      </div>
+
+      <div class="env-card">
+        <div class="env-card-info">
+          <span class="env-card-title">Build Tools</span>
+          <div class="env-card-value" id="valTools">Scanning...</div>
+        </div>
+        <span class="status-pill" id="pillTools">Checking</span>
+      </div>
+
+      <div class="env-card">
+        <div class="env-card-info">
+          <span class="env-card-title">Gradle Engine</span>
+          <div class="env-card-value" id="valGradle">Scanning...</div>
+        </div>
+        <span class="status-pill" id="pillGradle">Checking</span>
+      </div>
+    </section>
+
+    <!-- Main Workspace -->
+    <div class="workspace-grid">
+      <!-- Left: Configuration Form -->
+      <div class="card">
+        <div class="card-title">
+          <span>Application Configuration</span>
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+        </div>
+
+        <form id="apkForm" onsubmit="handleGenerate(event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+          <div class="form-scroll-content">
+            <!-- App Name -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Application Name <span class="required">*</span></span>
+                <span id="charCount" style="font-weight: 500; color: var(--text-sub);">0/30</span>
+              </label>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <path d="M7 8h10M7 12h10M7 16h6"/>
+                </svg>
+                <input 
+                  type="text" 
+                  id="appName" 
+                  class="form-control" 
+                  placeholder="e.g., My Web App" 
+                  required 
+                  autocomplete="off"
+                  oninput="handleNameInput(this.value)"
+                />
+              </div>
+            </div>
+
+            <!-- Source Type Switcher (URL vs Local HTML) -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Source Content <span class="required">*</span></span>
+                <span id="sourceTag" class="package-preview-tag">Online Website</span>
+              </label>
+              <div class="source-tabs">
+                <button type="button" class="tab-btn active" id="tabUrl" onclick="switchSourceMode('url')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"/>
+                  </svg>
+                  Website URL
+                </button>
+                <button type="button" class="tab-btn" id="tabFile" onclick="switchSourceMode('file')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                  </svg>
+                  Local HTML File (Offline)
+                </button>
+              </div>
+
+              <!-- Mode 1: URL Input -->
+              <div id="urlInputContainer">
+                <div class="input-wrapper">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"/>
+                  </svg>
+                  <input 
+                    type="url" 
+                    id="appUrl" 
+                    class="form-control" 
+                    placeholder="https://example.com" 
+                    autocomplete="off"
+                    oninput="validateUrl(this.value)"
+                  />
+                </div>
+                <div class="form-hint">
+                  <span>Enter full web URL (with https://)</span>
+                  <span id="urlValidationMsg" class="package-preview-tag">URL Required</span>
+                </div>
+              </div>
+
+              <!-- Mode 2: Local HTML File Input -->
+              <div id="fileInputContainer" style="display: none;">
+                <div class="dropzone" id="htmlDropzone" style="padding: 14px;">
+                  <input type="file" id="htmlInput" accept=".html,.htm,.zip" onchange="handleHtmlSelect(this.files)" />
+                  <div class="dropzone-text" id="htmlDropText">Choose local .html file or .zip package</div>
+                  <div class="dropzone-sub">Runs 100% offline inside the APK (assets/index.html)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Package ID (Fully Editable) -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Android Package ID</span>
+                <span id="pkgModeTag" class="package-preview-tag" onclick="resetPackageId()" style="cursor: pointer;" title="Click to auto-generate from App Name">Auto (Editable)</span>
+              </label>
+              <div class="input-wrapper">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                </svg>
+                <input 
+                  type="text" 
+                  id="packageId" 
+                  class="form-control" 
+                  value="com.evidentix.app"
+                  autocomplete="off"
+                  oninput="handlePackageInput(this.value)"
+                  placeholder="e.g., in.csib.myapp or com.company.app"
+                  style="color: var(--primary); font-family: 'JetBrains Mono', monospace; font-weight: 600;"
+                />
+              </div>
+              <div class="form-hint">
+                <span>Unique namespace. Fully customizable (e.g., in.csib.myapp)</span>
+              </div>
+            </div>
+
+            <!-- Custom Icon Upload (Compact) -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Launcher Icon (Optional)</span>
+                <span style="font-size: 0.72rem; color: var(--text-sub);">Auto-Density Scaling</span>
+              </label>
+              <div class="dropzone-container">
+                <div class="dropzone" id="dropzone">
+                  <input type="file" id="iconInput" accept="image/png, image/jpeg, image/webp" onchange="handleIconSelect(this.files)" />
+                  <div class="dropzone-text" id="dropzoneText">Select icon or drag & drop</div>
+                  <div class="dropzone-sub">PNG, JPG, or WEBP</div>
+                </div>
+                <div class="preview-box" id="previewBox">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            <div class="spinner" id="btnSpinner"></div>
+            <svg id="btnIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            <span id="btnText">Generate Android APK</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Right: Build Engine & Streaming Terminal -->
+      <div class="card">
+        <div class="card-title">
+          <span>Build Engine & Real-Time Console</span>
+          <div class="card-title-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 17 10 11 4 5"/>
+              <line x1="12" y1="19" x2="20" y2="19"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Pipeline Stepper -->
+        <div class="pipeline-stepper" id="stepper">
+          <div class="step-node active" id="step1">
+            <div class="step-circle">1</div>
+            <span class="step-name">Validate</span>
+          </div>
+          <div class="step-node" id="step2">
+            <div class="step-circle">2</div>
+            <span class="step-name">Prepare</span>
+          </div>
+          <div class="step-node" id="step3">
+            <div class="step-circle">3</div>
+            <span class="step-name">Icon</span>
+          </div>
+          <div class="step-node" id="step4">
+            <div class="step-circle">4</div>
+            <span class="step-name">Config</span>
+          </div>
+          <div class="step-node" id="step5">
+            <div class="step-circle">5</div>
+            <span class="step-name">Gradle</span>
+          </div>
+          <div class="step-node" id="step6">
+            <div class="step-circle">6</div>
+            <span class="step-name">APK</span>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-wrapper">
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+          </div>
+          <div class="progress-meta">
+            <span class="progress-status" id="progressStatus">Ready to compile</span>
+            <span class="progress-percent" id="progressPercent">0%</span>
+          </div>
+        </div>
+
+        <!-- Terminal Output -->
+        <div class="console-header">
+          <div class="console-dots">
+            <div class="console-dot dot-red"></div>
+            <div class="console-dot dot-yellow"></div>
+            <div class="console-dot dot-green"></div>
+          </div>
+          <span class="console-title">Build Execution Terminal</span>
+          <div class="console-actions">
+            <button class="btn-console" onclick="copyConsoleLogs()">Copy</button>
+            <button class="btn-console" onclick="clearConsole()">Clear</button>
+          </div>
+        </div>
+        <div class="terminal-box" id="terminalBox">
+<span class="log-dim">[INITIALIZED] Web2Apk v1.0 Pure Python Engine.</span>
+<span class="log-dim">[READY] Configure your app details and click "Generate Android APK".</span></div>
+
+        <!-- Success Result Card -->
+        <div class="success-card" id="successCard">
+          <div class="success-header">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="success-details">
+              <h3>APK Generated Successfully!</h3>
+              <p>Real Android package compiled and ready for installation.</p>
+            </div>
+          </div>
+
+          <div class="success-meta-grid">
+            <div>
+              <div class="meta-item-label">Package Name</div>
+              <div class="meta-item-val" id="resPkg">com.evidentix.app</div>
+            </div>
+            <div>
+              <div class="meta-item-label">File Size</div>
+              <div class="meta-item-val" id="resSize">-- MB</div>
+            </div>
+            <div style="grid-column: span 2;">
+              <div class="meta-item-label">Generated File</div>
+              <div class="meta-item-val" id="resFile">app-release.apk</div>
+            </div>
+          </div>
+
+          <div class="success-actions">
+            <a href="#" class="btn-download" id="downloadLink">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download APK Package
+            </a>
+            <button class="btn-open-folder" onclick="openOutputFolder()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+              Open in Explorer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with Instagram Link (Single Line Fit) -->
+  <footer>
+    <div class="footer-content">
+      <span class="footer-tagline">
+        <strong>Web2Apk v1.0</strong> — Developed by <strong>Mohsin Khawaja</strong> &bull; 100% Free &amp; Offline
+      </span>
+      <a href="https://www.instagram.com/csib.mohsin/" target="_blank" rel="noopener noreferrer" class="btn-instagram">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        Follow @csib.mohsin
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    let pollInterval = null;
+    let logOffset = 0;
+    let selectedIconFile = null;
+    let selectedHtmlFile = null;
+    let currentSourceMode = 'url'; // 'url' or 'file'
+    let isCustomPackageId = false;
+
+    function handlePackageInput(val) {
+      isCustomPackageId = true;
+      const tag = document.getElementById('pkgModeTag');
+      tag.textContent = 'Custom (Click to Reset)';
+      tag.style.background = 'var(--accent-subtle)';
+      tag.style.color = 'var(--accent)';
+    }
+
+    function resetPackageId() {
+      isCustomPackageId = false;
+      const tag = document.getElementById('pkgModeTag');
+      tag.textContent = 'Auto (Editable)';
+      tag.style.background = 'var(--primary-subtle)';
+      tag.style.color = 'var(--primary)';
+      handleNameInput(document.getElementById('appName').value);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchDiagnostics();
+    });
+
+    function switchSourceMode(mode) {
+      currentSourceMode = mode;
+      const tabUrl = document.getElementById('tabUrl');
+      const tabFile = document.getElementById('tabFile');
+      const urlBox = document.getElementById('urlInputContainer');
+      const fileBox = document.getElementById('fileInputContainer');
+      const sourceTag = document.getElementById('sourceTag');
+
+      if (mode === 'url') {
+        tabUrl.classList.add('active');
+        tabFile.classList.remove('active');
+        urlBox.style.display = 'block';
+        fileBox.style.display = 'none';
+        sourceTag.textContent = 'Online Website';
+        document.getElementById('appUrl').required = true;
+      } else {
+        tabFile.classList.add('active');
+        tabUrl.classList.remove('active');
+        urlBox.style.display = 'none';
+        fileBox.style.display = 'block';
+        sourceTag.textContent = '100% Offline Asset';
+        document.getElementById('appUrl').required = false;
+      }
+    }
+
+    async function fetchDiagnostics() {
+      try {
+        const res = await fetch('/api/env');
+        const data = await res.json();
+        
+        // Java
+        const j = data.java || {};
+        document.getElementById('valJava').textContent = j.found ? (j.version ? 'Java ' + j.version : 'Detected') : 'Missing';
+        const pJ = document.getElementById('pillJava');
+        pJ.textContent = j.compatible ? 'Ready' : 'Incompatible';
+        pJ.className = 'status-pill ' + (j.compatible ? 'ready' : 'error');
+
+        // SDK
+        const s = data.sdk || {};
+        document.getElementById('valSdk').textContent = s.found ? 'Installed' : 'Missing';
+        const pS = document.getElementById('pillSdk');
+        pS.textContent = s.found ? 'Ready' : 'Missing';
+        pS.className = 'status-pill ' + (s.found ? 'ready' : 'error');
+
+        // Build Tools
+        const b = data.build_tools || {};
+        document.getElementById('valTools').textContent = b.found ? ('v' + (b.version || 'Ready')) : 'Missing';
+        const pT = document.getElementById('pillTools');
+        pT.textContent = b.found ? 'Ready' : 'Missing';
+        pT.className = 'status-pill ' + (b.found ? 'ready' : 'error');
+
+        // Gradle
+        const g = data.gradle || {};
+        document.getElementById('valGradle').textContent = g.found ? (g.version ? 'v' + g.version : 'Ready') : 'Missing';
+        const pG = document.getElementById('pillGradle');
+        pG.textContent = g.found ? 'Ready' : 'Missing';
+        pG.className = 'status-pill ' + (g.found ? 'ready' : 'error');
+
+        if (!data.ready) {
+          appendLog('[WARNING] Missing dependencies. Verify Java & Android SDK in settings.', 'warn');
+        }
+      } catch (err) {
+        console.error('Failed to load diagnostics', err);
+      }
+    }
+
+    function handleNameInput(val) {
+      document.getElementById('charCount').textContent = `${val.length}/30`;
+      
+      if (isCustomPackageId) return;
+
+      if (!val) {
+        document.getElementById('packageId').value = 'com.evidentix.app';
+        return;
+      }
+      
+      let clean = val.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!clean) clean = 'app';
+      if (/^[0-9]/.test(clean)) clean = 'app' + clean;
+      
+      document.getElementById('packageId').value = `com.evidentix.${clean}`;
+    }
+
+    function validateUrl(val) {
+      const tag = document.getElementById('urlValidationMsg');
+      if (!val) {
+        tag.textContent = 'URL Required';
+        tag.style.color = 'var(--text-sub)';
+        tag.style.background = 'var(--primary-subtle)';
+        return;
+      }
+      try {
+        const u = new URL(val);
+        if (u.protocol === 'http:' || u.protocol === 'https:') {
+          tag.textContent = 'Valid (' + u.protocol.replace(':', '') + ')';
+          tag.style.color = 'var(--success)';
+          tag.style.background = 'var(--success-subtle)';
+        } else {
+          tag.textContent = 'http / https required';
+          tag.style.color = 'var(--error)';
+          tag.style.background = 'var(--error-subtle)';
+        }
+      } catch (_) {
+        tag.textContent = 'Invalid format';
+        tag.style.color = 'var(--error)';
+        tag.style.background = 'var(--error-subtle)';
+      }
+    }
+
+    function handleHtmlSelect(files) {
+      if (!files || !files[0]) return;
+      const file = files[0];
+      selectedHtmlFile = file;
+      document.getElementById('htmlDropText').textContent = 'Selected: ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+      appendLog(`[SOURCE] Loaded local web package: ${file.name}`, 'info');
+    }
+
+    function handleIconSelect(files) {
+      if (!files || !files[0]) return;
+      const file = files[0];
+      selectedIconFile = file;
+
+      document.getElementById('dropzoneText').textContent = file.name;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const box = document.getElementById('previewBox');
+        box.innerHTML = `<img src="${e.target.result}" alt="Preview" />`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Drag and drop icon
+    const dropzone = document.getElementById('dropzone');
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleIconSelect(e.dataTransfer.files);
+      }
+    });
+
+    // Drag and drop html file
+    const htmlDrop = document.getElementById('htmlDropzone');
+    htmlDrop.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      htmlDrop.classList.add('dragover');
+    });
+    htmlDrop.addEventListener('dragleave', () => htmlDrop.classList.remove('dragover'));
+    htmlDrop.addEventListener('drop', (e) => {
+      e.preventDefault();
+      htmlDrop.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleHtmlSelect(e.dataTransfer.files);
+      }
+    });
+
+    async function handleGenerate(e) {
+      e.preventDefault();
+      
+      const appName = document.getElementById('appName').value.trim();
+      const appUrl = document.getElementById('appUrl').value.trim();
+      
+      if (!appName) {
+        alert('Please enter an Application Name.');
+        return;
+      }
+
+      if (currentSourceMode === 'url' && !appUrl) {
+        alert('Please enter the Website URL.');
+        return;
+      }
+
+      if (currentSourceMode === 'file' && !selectedHtmlFile) {
+        alert('Please choose a local HTML file or ZIP package.');
+        return;
+      }
+
+      setBuildingState(true);
+      document.getElementById('successCard').style.display = 'none';
+      logOffset = 0;
+      clearConsole();
+      appendLog(`[START] Compiling native Android APK for "${appName}"...`, 'info');
+      if (currentSourceMode === 'file') {
+        appendLog(`[MODE] Local HTML Asset (${selectedHtmlFile.name})`, 'info');
+      } else {
+        appendLog(`[MODE] Online Website (${appUrl})`, 'dim');
+      }
+
+      const formData = new FormData();
+      formData.append('app_name', appName);
+      formData.append('package_id', document.getElementById('packageId').value.trim());
+      formData.append('source_type', currentSourceMode);
+      if (currentSourceMode === 'file') {
+        formData.append('local_html', selectedHtmlFile);
+      } else {
+        formData.append('webview_url', appUrl);
+      }
+      if (selectedIconFile) {
+        formData.append('icon', selectedIconFile);
+      }
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        
+        if (data.status === 'started' || data.success) {
+          startPolling();
+        } else {
+          setBuildingState(false);
+          appendLog(`[ERROR] ${data.error || 'Failed to start compilation.'}`, 'error');
+        }
+      } catch (err) {
+        setBuildingState(false);
+        appendLog(`[ERROR] Network error: ${err.message}`, 'error');
+      }
+    }
+
+    function setBuildingState(isBuilding) {
+      const btn = document.getElementById('btnSubmit');
+      const spinner = document.getElementById('btnSpinner');
+      const icon = document.getElementById('btnIcon');
+      const text = document.getElementById('btnText');
+
+      if (isBuilding) {
+        btn.disabled = true;
+        spinner.style.display = 'block';
+        icon.style.display = 'none';
+        text.textContent = 'Compiling Android Package...';
+      } else {
+        btn.disabled = false;
+        spinner.style.display = 'none';
+        icon.style.display = 'block';
+        text.textContent = 'Generate Android APK';
+      }
+    }
+
+    function startPolling() {
+      if (pollInterval) clearInterval(pollInterval);
+      pollInterval = setInterval(pollStatus, 800);
+    }
+
+    async function pollStatus() {
+      try {
+        const res = await fetch(`/api/status?log_offset=${logOffset}`);
+        const data = await res.json();
+
+        const pct = data.progress || 0;
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('progressPercent').textContent = pct + '%';
+        document.getElementById('progressStatus').textContent = data.status || 'Processing...';
+
+        updateStepper(data.stage);
+
+        if (data.new_logs && data.new_logs.length > 0) {
+          data.new_logs.forEach(line => appendLog(line));
+          logOffset += data.new_logs.length;
+        }
+
+        if (!data.running) {
+          clearInterval(pollInterval);
+          pollInterval = null;
+          setBuildingState(false);
+
+          if (data.success) {
+            handleBuildSuccess(data);
+          } else {
+            appendLog(`\n[BUILD FAILED] ${data.error || 'Build encountered an error.'}`, 'error');
+          }
+        }
+      } catch (err) {
+        console.error('Polling error', err);
+      }
+    }
+
+    function updateStepper(stage) {
+      const stages = ['VALIDATING', 'PREPARING', 'PROCESSING_ICON', 'CONFIGURING', 'RUNNING_GRADLE', 'SUCCESS'];
+      const idx = stages.indexOf(stage);
+
+      for (let i = 1; i <= 6; i++) {
+        const node = document.getElementById('step' + i);
+        node.className = 'step-node';
+        if (i - 1 < idx) {
+          node.classList.add('completed');
+        } else if (i - 1 === idx) {
+          node.classList.add('active');
+        }
+      }
+    }
+
+    function handleBuildSuccess(data) {
+      appendLog('\n🎉 [SUCCESS] Real Android APK created successfully!', 'success');
+      appendLog(`[OUTPUT FILE] ${data.apk_path}`, 'info');
+
+      const card = document.getElementById('successCard');
+      document.getElementById('resPkg').textContent = data.package_name || 'com.evidentix.app';
+      document.getElementById('resSize').textContent = (data.apk_size_mb || '0') + ' MB';
+      document.getElementById('resFile').textContent = data.apk_name || 'app-release.apk';
+      
+      const dlLink = document.getElementById('downloadLink');
+      dlLink.href = `/api/download/${encodeURIComponent(data.apk_name)}`;
+      
+      card.style.display = 'block';
+    }
+
+    function appendLog(line, type = '') {
+      const box = document.getElementById('terminalBox');
+      const el = document.createElement('div');
+      
+      if (type === 'error' || line.includes('[ERROR]') || line.includes('FAILURE')) {
+        el.className = 'log-error';
+      } else if (type === 'success' || line.includes('SUCCESS') || line.includes('🎉')) {
+        el.className = 'log-success';
+      } else if (type === 'warn' || line.includes('[WARNING]') || line.includes('warning:')) {
+        el.className = 'log-warn';
+      } else if (type === 'info' || line.includes('>>>') || line.includes('[INFO]') || line.includes('[START]')) {
+        el.className = 'log-info';
+      } else if (type === 'dim') {
+        el.className = 'log-dim';
+      }
+
+      el.textContent = line;
+      box.appendChild(el);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function clearConsole() {
+      document.getElementById('terminalBox').innerHTML = '';
+      logOffset = 0;
+    }
+
+    function copyConsoleLogs() {
+      const box = document.getElementById('terminalBox');
+      navigator.clipboard.writeText(box.innerText).then(() => {
+        alert('Terminal logs copied to clipboard.');
+      });
+    }
+
+    async function openOutputFolder() {
+      try {
+        await fetch('/api/open-folder', { method: 'POST' });
+      } catch (err) {
+        alert('Could not open folder automatically.');
+      }
+    }
+  </script>
+</body>
+</html>

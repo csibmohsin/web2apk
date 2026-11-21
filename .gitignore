@@ -1,0 +1,26 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Build Workspaces & Temp Directories
+build_workspace/
+temp_icon/
+temp_html/
+temp_build/
+
+# Output Artifacts (Keep directory with .gitkeep)
+Generated_APKs/*.apk
+!Generated_APKs/.gitkeep
+
+# IDEs & System Files
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
