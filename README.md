@@ -1,4 +1,4 @@
-# Web2Apk (v1.0)
+# Web2Apk (v1.2)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-1.0.0-blue.svg?style=for-the-badge" alt="Version 1.0">
